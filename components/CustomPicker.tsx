@@ -28,7 +28,7 @@ interface Props {
   options: string[];
 }
 
-const CustomPicker = ({ value, onValueChange, options }: Props) => {
+export const CustomPicker = ({ value, onValueChange, options }: Props) => {
   const [modalVisible, setModalVisible] = useState(false);
 
   return (
@@ -152,5 +152,3 @@ const App = () => {
     </View>
   );
 };
-
-export default CustomPicker;

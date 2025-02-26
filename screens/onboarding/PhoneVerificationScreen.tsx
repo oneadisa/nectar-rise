@@ -10,12 +10,13 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
 } from "react-native";
-import { CustomButton } from "../../components/CustomButton";
+
 import { router } from "expo-router";
-import BackSvg from "../../components/figma/Back";
-import Continue from "../../components/figma/Continue";
+
 import CountryFlag from "react-native-country-flag";
 import Next from "@/components/Next";
+
+import { BackButton, Background } from "../../components";
 
 const { width, height } = Dimensions.get("window");
 export const PhoneVerificationScreen = () => {
@@ -29,17 +30,9 @@ export const PhoneVerificationScreen = () => {
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={{ backgroundColor: "#fcfcfc" }}>
-        <ImageBackground
-          source={require("../../assets/images/background.png")}
-          style={styles.background}
-        >
+        <Background>
           <View>
-            <TouchableOpacity
-              onPress={() => router.back()}
-              style={styles.goBack}
-            >
-              <BackSvg width={100} height={100} fill="#181725" />
-            </TouchableOpacity>
+            <BackButton />
             <View style={styles.content}>
               <Text style={styles.title}>Enter your mobile number</Text>
               <Text style={styles.subtitle}>Mobile number </Text>
@@ -63,7 +56,7 @@ export const PhoneVerificationScreen = () => {
               <Next onPress={handleContinue} />
             </View>
           </View>
-        </ImageBackground>
+        </Background>
       </View>
     </TouchableWithoutFeedback>
   );

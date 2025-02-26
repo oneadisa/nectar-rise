@@ -7,8 +7,9 @@ import {
   Dimensions,
   ImageBackground,
 } from "react-native";
-import { CustomButton } from "../../components/CustomButton";
+import { CustomButton } from "../../components";
 import { router } from "expo-router";
+import { Fonts } from "@/constants/Fonts";
 // import SvgUri from 'react-native-svg-uri';
 
 const { width, height } = Dimensions.get("window");
@@ -75,12 +76,12 @@ const styles = StyleSheet.create({
     fontSize: 48,
     marginBottom: 10,
     color: "white",
-    fontFamily: "GilroyBold",
+    fontFamily: Fonts.GilroyBold,
     textAlign: "center",
   },
   subtitle: {
     fontSize: 16,
-    fontFamily: "Gilroy",
+    fontFamily: Fonts.Gilroy,
     textAlign: "center",
     color: "#FCFCFCB2",
   },

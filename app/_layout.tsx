@@ -11,6 +11,7 @@ import { useEffect } from "react";
 import "react-native-reanimated";
 
 import { useColorScheme } from "@/hooks/useColorScheme";
+import { Fonts } from "@/constants/Fonts";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -18,11 +19,11 @@ SplashScreen.preventAutoHideAsync();
 export default function RootLayout() {
   const colorScheme = useColorScheme();
   const [loaded] = useFonts({
-    SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
-    Gilroy: require("../assets/fonts/Gilroy-Regular.ttf"),
-    GilroyBold: require("../assets/fonts/Gilroy-Bold.ttf"),
-    GilroyMedium: require("../assets/fonts/Gilroy-Medium.ttf"),
-    GilroySemi: require("../assets/fonts/Gilroy-SemiBold.ttf"),
+    [Fonts.SpaceMono]: require("../assets/fonts/SpaceMono-Regular.ttf"),
+    [Fonts.Gilroy]: require("../assets/fonts/Gilroy-Regular.ttf"),
+    [Fonts.GilroyBold]: require("../assets/fonts/Gilroy-Bold.ttf"),
+    [Fonts.GilroyMedium]: require("../assets/fonts/Gilroy-Medium.ttf"),
+    [Fonts.GilroySemi]: require("../assets/fonts/Gilroy-SemiBold.ttf"),
   });
 
   useEffect(() => {

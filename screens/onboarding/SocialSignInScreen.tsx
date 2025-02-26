@@ -3,21 +3,18 @@ import {
   View,
   Text,
   StyleSheet,
-  SafeAreaView,
   Image,
-  ImageBackground,
   TextInput,
-  TouchableOpacity,
   TouchableWithoutFeedback,
   Keyboard,
 } from "react-native";
 import { CustomButton } from "../../components/CustomButton";
 import { router } from "expo-router";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import CountryFlag from "react-native-country-flag";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-import BackSvg from "@/components/figma/Back";
+
+import { BackButton } from "@/components";
 
 export const SocialSignInScreen = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -29,9 +26,7 @@ export const SocialSignInScreen = () => {
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={{ flex: 1 }}>
-        <TouchableOpacity onPress={() => router.back()} style={styles.goBack}>
-          <BackSvg width={100} height={100} fill="#181725" />
-        </TouchableOpacity>
+        <BackButton />
         <View>
           <Image
             source={require("../../assets/images/veggies.png")}
@@ -57,6 +52,7 @@ export const SocialSignInScreen = () => {
               keyboardType="phone-pad"
               value={phoneNumber}
               onChangeText={setPhoneNumber}
+              // onBlur={() => Keyboard.dismiss()}
             />
           </View>
 

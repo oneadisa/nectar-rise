@@ -10,12 +10,11 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
 } from "react-native";
-import { CustomButton } from "../../components/CustomButton";
+import { CustomButton, CustomPicker, Background } from "../../components";
 import { router } from "expo-router";
-import BackSvg from "../../components/figma/Back";
+import { BackButton } from "../../components";
 import Location from "@/components/figma/Location";
-import { Picker } from "@react-native-picker/picker";
-import CustomPicker from "@/components/CustomPicker";
+import { Fonts } from "@/constants/Fonts";
 
 const { width, height } = Dimensions.get("window");
 
@@ -50,17 +49,9 @@ export const LocationScreen = () => {
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={{ backgroundColor: "#fcfcfc" }}>
-        <ImageBackground
-          source={require("../../assets/images/background.png")}
-          style={styles.background}
-        >
+        <Background>
           <View>
-            <TouchableOpacity
-              onPress={() => router.back()}
-              style={styles.goBack}
-            >
-              <BackSvg width={100} height={100} fill="#181725" />
-            </TouchableOpacity>
+            <BackButton />
             <View style={styles.content}>
               <View style={styles.locationContainer}>
                 <Location width={225} height={171} fill="#55B277" />
@@ -96,7 +87,7 @@ export const LocationScreen = () => {
               />
             </View>
           </View>
-        </ImageBackground>
+        </Background>
       </View>
     </TouchableWithoutFeedback>
   );
@@ -107,34 +98,30 @@ const styles = StyleSheet.create({
     width: width,
     height: height,
   },
-  goBack: { padding: 25, position: "absolute", top: 40, left: 10, zIndex: 2 },
   container: {
     flex: 1,
     backgroundColor: "#fff",
   },
   content: {
-    // backgroundColor: "#fcfcfc",
-
     marginTop: 100,
     padding: 20,
     zIndex: 0,
-    // alignItems: "center",
     height: "100%",
   },
   title: {
     fontSize: 24,
-    // fontWeight: "bold",
     textAlign: "center",
     marginBottom: 20,
     color: "#333",
-    fontFamily: "GilroyMedium",
+    fontFamily: Fonts.GilroyMedium,
   },
   subtitle: {
+    lineHeight: 24,
     textAlign: "center",
     fontSize: 16,
     color: "#666",
     marginBottom: 100,
-    fontFamily: "Gilroy",
+    fontFamily: Fonts.Gilroy,
   },
   input: {
     flex: 1,
@@ -150,20 +137,14 @@ const styles = StyleSheet.create({
   inputContainer: {
     flexDirection: "row",
     marginBottom: 30,
-    // borderLeftWidth: 1,
     borderBottomWidth: 1,
     borderBottomColor: "#E2E2E2",
-    // borderLeftColor: "#E2E2E2",
   },
-
   locationContainer: {
-    // flexDirection: "row",
     marginBottom: 30,
     alignItems: "center",
   },
   countryCode: {
-    // backgroundColor: "#f5f5f5",
-    // padding: 15,
     borderRadius: 8,
     marginRight: 10,
     justifyContent: "center",
@@ -179,6 +160,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "#666",
     marginBottom: 5,
-    fontFamily: "GilroyMedium",
+    fontFamily: Fonts.GilroyMedium,
   },
 });

@@ -11,11 +11,14 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
 } from "react-native";
-import { CustomButton } from "../../components/CustomButton";
+
 import { router } from "expo-router";
-import BackSvg from "@/components/figma/Back";
+
 import Carrot from "@/components/figma/Carrot";
 import Svg, { Path } from "react-native-svg";
+import { CustomButton, Background } from "../../components";
+import { Fonts } from "@/constants/Fonts";
+import { BackButton } from "../../components";
 
 interface EyeProps {
   color?: string;
@@ -90,17 +93,9 @@ export const LoginScreen = ({
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={{ backgroundColor: "#fcfcfc" }}>
-        <ImageBackground
-          source={require("../../assets/images/background.png")}
-          style={styles.background}
-        >
+        <Background>
           <View>
-            <TouchableOpacity
-              onPress={() => router.back()}
-              style={styles.goBack}
-            >
-              <BackSvg width={100} height={100} fill="#181725" />
-            </TouchableOpacity>
+            <BackButton />
             <View style={styles.content}>
               <View style={styles.carrotContainer}>
                 <Carrot width={48} height={56} fill="#55B277" />
@@ -180,7 +175,7 @@ export const LoginScreen = ({
               {/* </View> */}
             </View>
           </View>
-        </ImageBackground>
+        </Background>
       </View>
     </TouchableWithoutFeedback>
   );
@@ -204,7 +199,7 @@ const styles = StyleSheet.create({
     color: "#000000",
     paddingVertical: 8,
     paddingHorizontal: 0,
-    fontFamily: "Gilroy",
+    fontFamily: Fonts.Gilroy,
     minHeight: 40, // Add minimum height for better touch area
   },
   innerContainer: {
@@ -220,14 +215,14 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "#666",
     marginBottom: 8,
-    fontFamily: "Gilroy",
+    fontFamily: Fonts.Gilroy,
   },
   // input: {
   //   fontSize: 16,
   //   color: "#000000",
   //   paddingVertical: 8,
   //   paddingHorizontal: 0,
-  //   fontFamily: "Gilroy",
+  //   fontFamily: Fonts.Gilroy",
   // },
   // passwordContainer: {
   //   flexDirection: "row",
@@ -244,7 +239,7 @@ const styles = StyleSheet.create({
   forgotPasswordText: {
     color: "#666",
     fontSize: 14,
-    fontFamily: "Gilroy",
+    fontFamily: Fonts.Gilroy,
   },
 
   signupContainer: {
@@ -256,13 +251,13 @@ const styles = StyleSheet.create({
   signupText: {
     color: "#666",
     fontSize: 14,
-    fontFamily: "Gilroy",
+    fontFamily: Fonts.Gilroy,
   },
   signupLink: {
     color: "#81B29A", // Same green as login button
     fontSize: 14,
     fontWeight: "500",
-    fontFamily: "Gilroy",
+    fontFamily: Fonts.Gilroy,
   },
   background: {
     width: width,
@@ -285,14 +280,14 @@ const styles = StyleSheet.create({
     // textAlign: "center",
     marginBottom: 20,
     color: "#333",
-    fontFamily: "GilroyMedium",
+    fontFamily: Fonts.GilroyMedium,
   },
   subtitle: {
     // textAlign: "center",
     fontSize: 16,
-    color: "#666",
+    color: "#666ghsjsj",
     marginBottom: 25,
-    fontFamily: "Gilroy",
+    fontFamily: Fonts.Gilroy,
   },
 
   button: {

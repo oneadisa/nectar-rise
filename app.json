@@ -27,10 +27,12 @@
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/carrot.png",
-          "imageWidth": 200,
-          "resizeMode": "contain",
-          "backgroundColor": "#ffffff"
+          "image": "./assets/images/splash-screen.png",
+          "imageResizeMode": "cover",
+          "backgroundColor": "#53B175",
+          "imageStyle": {
+            "marginTop": "-10%"
+          }
         }
       ]
     ],
