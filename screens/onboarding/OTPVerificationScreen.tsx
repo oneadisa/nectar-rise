@@ -9,6 +9,8 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   Keyboard,
+  ScrollView,
+  KeyboardAvoidingView,
 } from "react-native";
 
 import { router } from "expo-router";
@@ -27,31 +29,32 @@ export const OTPVerificationScreen = () => {
   };
 
   return (
-    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-      <View style={{ backgroundColor: "#fcfcfc" }}>
-        <Background>
-          <View>
-            <BackButton />
-            <View style={styles.content}>
-              <Text style={styles.title}>Enter your 4-digit code</Text>
-              <Text style={styles.subtitle}>Code</Text>
+    <View style={{ backgroundColor: "#fcfcfc" }}>
+      <Background>
+        <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
+          <ScrollView style={{ flex: 1 }}>
+            <View>
+              <BackButton />
+              <View style={styles.content}>
+                <Text style={styles.title}>Enter your 4-digit code</Text>
+                <Text style={styles.subtitle}>Code</Text>
 
-              <View style={styles.inputContainer}>
-                <TextInput
-                  style={styles.input}
-                  placeholder="- - - -"
-                  keyboardType="phone-pad"
-                  value={otp}
-                  onChangeText={setOtp}
-                />
+                <View style={styles.inputContainer}>
+                  <TextInput
+                    style={styles.input}
+                    placeholder="- - - -"
+                    keyboardType="phone-pad"
+                    value={otp}
+                    onChangeText={setOtp}
+                  />
+                </View>
               </View>
-
-              <Next text="Resend Code" onPress={handleVerify} />
             </View>
-          </View>
-        </Background>
-      </View>
-    </TouchableWithoutFeedback>
+          </ScrollView>
+          <Next text="Resend Code" onPress={handleVerify} />
+        </KeyboardAvoidingView>
+      </Background>
+    </View>
   );
 };
 

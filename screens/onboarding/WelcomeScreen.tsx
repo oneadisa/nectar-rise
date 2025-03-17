@@ -9,8 +9,7 @@ import {
 } from "react-native";
 import { CustomButton } from "../../components";
 import { router } from "expo-router";
-import { Fonts } from "@/constants/Fonts";
-// import SvgUri from 'react-native-svg-uri';
+import { FONTS } from "@/constants/Fonts";
 
 const { width, height } = Dimensions.get("window");
 
@@ -57,8 +56,6 @@ const styles = StyleSheet.create({
 
   imageContainer: {
     flex: 1,
-    // alignItems: "center",
-    // justifyContent: "center",
     width: width,
     height: height,
   },
@@ -76,12 +73,12 @@ const styles = StyleSheet.create({
     fontSize: 48,
     marginBottom: 10,
     color: "white",
-    fontFamily: Fonts.GilroyBold,
+    fontFamily: FONTS.GilroyBold,
     textAlign: "center",
   },
   subtitle: {
     fontSize: 16,
-    fontFamily: Fonts.Gilroy,
+    fontFamily: FONTS.Gilroy,
     textAlign: "center",
     color: "#FCFCFCB2",
   },

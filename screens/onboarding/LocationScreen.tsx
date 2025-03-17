@@ -14,7 +14,7 @@ import { CustomButton, CustomPicker, Background } from "../../components";
 import { router } from "expo-router";
 import { BackButton } from "../../components";
 import Location from "@/components/figma/Location";
-import { Fonts } from "@/constants/Fonts";
+import { FONTS } from "@/constants/Fonts";
 
 const { width, height } = Dimensions.get("window");
 
@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginBottom: 20,
     color: "#333",
-    fontFamily: Fonts.GilroyMedium,
+    fontFamily: FONTS.GilroyMedium,
   },
   subtitle: {
     lineHeight: 24,
@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "#666",
     marginBottom: 100,
-    fontFamily: Fonts.Gilroy,
+    fontFamily: FONTS.Gilroy,
   },
   input: {
     flex: 1,
@@ -160,6 +160,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "#666",
     marginBottom: 5,
-    fontFamily: Fonts.GilroyMedium,
+    fontFamily: FONTS.GilroyMedium,
   },
 });

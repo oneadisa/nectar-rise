@@ -19,10 +19,11 @@ const Next = ({ text, onPress }: Props) => {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 200,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
+    marginBottom: 31,
+    marginHorizontal: 16,
   },
 
   text: {

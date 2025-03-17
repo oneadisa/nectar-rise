@@ -7,6 +7,7 @@
     "icon": "./assets/images/carrot.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
+    "assetBundlePatterns": ["assets/**/*"],
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true
@@ -28,10 +29,10 @@
         "expo-splash-screen",
         {
           "image": "./assets/images/splash-screen.png",
-          "imageResizeMode": "cover",
+          "imageResizeMode": "contain",
           "backgroundColor": "#53B175",
           "imageStyle": {
-            "marginTop": "-10%"
+            "marginTop": "0%"
           }
         }
       ]

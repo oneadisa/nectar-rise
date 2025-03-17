@@ -9,6 +9,8 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   Keyboard,
+  ScrollView,
+  KeyboardAvoidingView,
 } from "react-native";
 
 import { router } from "expo-router";
@@ -28,37 +30,42 @@ export const PhoneVerificationScreen = () => {
   };
 
   return (
-    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-      <View style={{ backgroundColor: "#fcfcfc" }}>
-        <Background>
-          <View>
-            <BackButton />
-            <View style={styles.content}>
-              <Text style={styles.title}>Enter your mobile number</Text>
-              <Text style={styles.subtitle}>Mobile number </Text>
+    // <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
 
-              <View style={styles.inputContainer}>
-                <View style={styles.countryCode}>
-                  <CountryFlag isoCode="bd" size={25} />
+    <View style={{ backgroundColor: "#fcfcfc" }}>
+      <Background>
+        <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
+          <ScrollView style={{ flex: 1 }}>
+            <View>
+              <BackButton />
+              <View style={styles.content}>
+                <Text style={styles.title}>Enter your mobile number</Text>
+                <Text style={styles.subtitle}>Mobile number </Text>
+
+                <View style={styles.inputContainer}>
+                  <View style={styles.countryCode}>
+                    <CountryFlag isoCode="bd" size={25} />
+                  </View>
+                  <View style={styles.countryCode}>
+                    <Text style={styles.countryCodeText}>+880</Text>
+                  </View>
+                  <TextInput
+                    style={styles.input}
+                    // placeholder="Phone Number"
+                    keyboardType="phone-pad"
+                    value={phoneNumber}
+                    onChangeText={setPhoneNumber}
+                  />
                 </View>
-                <View style={styles.countryCode}>
-                  <Text style={styles.countryCodeText}>+880</Text>
-                </View>
-                <TextInput
-                  style={styles.input}
-                  // placeholder="Phone Number"
-                  keyboardType="phone-pad"
-                  value={phoneNumber}
-                  onChangeText={setPhoneNumber}
-                />
               </View>
-
-              <Next onPress={handleContinue} />
             </View>
-          </View>
-        </Background>
-      </View>
-    </TouchableWithoutFeedback>
+          </ScrollView>
+          <Next onPress={handleContinue} />
+        </KeyboardAvoidingView>
+      </Background>
+    </View>
+
+    // </TouchableWithoutFeedback>
   );
 };
 

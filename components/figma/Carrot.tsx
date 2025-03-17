@@ -1,13 +1,13 @@
 import * as React from "react";
 import Svg, { SvgProps, Path } from "react-native-svg";
-const Carrot = (props: SvgProps) => (
-  <Svg
-    // xmlns="http://www.w3.org/2000/svg"
-    width={49}
-    height={57}
-    fill="none"
-    {...props}
-  >
+
+interface CarrotProps extends SvgProps {
+  width?: number;
+  height?: number;
+}
+
+const Carrot = ({ width = 49, height = 57, ...props }: CarrotProps) => (
+  <Svg width={width} height={height} fill="none" viewBox="0 0 49 57" {...props}>
     <Path
       fill="#53B175"
       fillRule="evenodd"
@@ -20,4 +20,5 @@ const Carrot = (props: SvgProps) => (
     />
   </Svg>
 );
+
 export default Carrot;

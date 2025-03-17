@@ -15,7 +15,7 @@ import { router } from "expo-router";
 import Carrot from "@/components/figma/Carrot";
 import Svg, { Path } from "react-native-svg";
 import { CustomButton, Background, BackButton } from "../../components";
-import { Fonts } from "@/constants/Fonts";
+import { FONTS } from "@/constants/Fonts";
 
 interface EyeProps {
   color?: string;
@@ -221,7 +221,7 @@ const styles = StyleSheet.create({
     color: "#000000",
     paddingVertical: 8,
     paddingHorizontal: 0,
-    fontFamily: Fonts.Gilroy,
+    fontFamily: FONTS.Gilroy,
     minHeight: 40, // Add minimum height for better touch area
   },
   innerContainer: {
@@ -237,7 +237,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "#666",
     marginBottom: 8,
-    fontFamily: Fonts.Gilroy,
+    fontFamily: FONTS.Gilroy,
   },
   forgotPasswordContainer: {
     alignItems: "flex-end",
@@ -246,7 +246,7 @@ const styles = StyleSheet.create({
   forgotPasswordText: {
     color: "#666",
     fontSize: 14,
-    fontFamily: Fonts.Gilroy,
+    fontFamily: FONTS.Gilroy,
   },
   termsContainer: {
     flexDirection: "row",
@@ -265,13 +265,13 @@ const styles = StyleSheet.create({
   signupText: {
     color: "#666",
     fontSize: 14,
-    fontFamily: Fonts.Gilroy,
+    fontFamily: FONTS.Gilroy,
   },
   signupLink: {
     color: "#81B29A", // Same green as login button
     fontSize: 14,
     fontWeight: "500",
-    fontFamily: Fonts.Gilroy,
+    fontFamily: FONTS.Gilroy,
   },
   background: {
     width: width,
@@ -294,14 +294,14 @@ const styles = StyleSheet.create({
     // textAlign: "center",
     marginBottom: 20,
     color: "#333",
-    fontFamily: Fonts.GilroyMedium,
+    fontFamily: FONTS.GilroyMedium,
   },
   subtitle: {
     // textAlign: "center",
     fontSize: 16,
     color: "#666",
     marginBottom: 25,
-    fontFamily: Fonts.Gilroy,
+    fontFamily: FONTS.Gilroy,
   },
 
   button: {
