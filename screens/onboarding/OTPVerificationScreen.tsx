@@ -1,0 +1,124 @@
+import React, { useState, useRef } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Dimensions,
+  TextInput,
+  ImageBackground,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  Keyboard,
+  ScrollView,
+  KeyboardAvoidingView,
+} from "react-native";
+
+import { router } from "expo-router";
+import Next from "@/components/Next";
+import { BackButton, Background } from "../../components";
+
+const { width, height } = Dimensions.get("window");
+
+export const OTPVerificationScreen = () => {
+  const [otp, setOtp] = useState("");
+  // const inputRefs = useRef<TextInput[]>([]);
+
+  const handleVerify = () => {
+    // Add OTP verification logic here
+    router.push("/(onboarding)/location");
+  };
+
+  return (
+    <View style={{ backgroundColor: "#fcfcfc" }}>
+      <Background>
+        <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
+          <ScrollView style={{ flex: 1 }}>
+            <View>
+              <BackButton />
+              <View style={styles.content}>
+                <Text style={styles.title}>Enter your 4-digit code</Text>
+                <Text style={styles.subtitle}>Code</Text>
+
+                <View style={styles.inputContainer}>
+                  <TextInput
+                    style={styles.input}
+                    placeholder="- - - -"
+                    keyboardType="phone-pad"
+                    value={otp}
+                    onChangeText={setOtp}
+                  />
+                </View>
+              </View>
+            </View>
+          </ScrollView>
+          <Next text="Resend Code" onPress={handleVerify} />
+        </KeyboardAvoidingView>
+      </Background>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  background: {
+    width: width,
+    height: height,
+  },
+  goBack: { padding: 25, position: "absolute", top: 40, left: 10, zIndex: 2 },
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+  },
+  content: {
+    // backgroundColor: "#fcfcfc",
+    marginTop: 120,
+    padding: 20,
+    zIndex: 0,
+    // height: '100%'
+  },
+  title: {
+    fontSize: 24,
+    // fontWeight: "bold",
+    marginBottom: 30,
+    color: "#333",
+    fontFamily: "GilroyMedium",
+  },
+  subtitle: {
+    fontSize: 16,
+    color: "#666",
+    marginBottom: 5,
+    fontFamily: "GilroyMedium",
+  },
+  input: {
+    flex: 1,
+    backgroundColor: "#fcfcfc",
+    paddingTop: 15,
+    paddingBottom: 15,
+    borderRadius: 8,
+    fontSize: 16,
+  },
+  button: {
+    marginTop: 20,
+  },
+  inputContainer: {
+    flexDirection: "row",
+    marginBottom: 30,
+    // borderLeftWidth: 1,
+    borderBottomWidth: 1,
+    borderBottomColor: "#E2E2E2",
+    // borderLeftColor: "#E2E2E2",
+  },
+  countryCode: {
+    // backgroundColor: "#f5f5f5",
+    // padding: 15,
+    borderRadius: 8,
+    marginRight: 10,
+    justifyContent: "center",
+  },
+  countryCodeText: {
+    fontSize: 16,
+    color: "#333",
+    borderRightWidth: 1,
+    borderLeftColor: "#7C7C7C",
+    paddingRight: 10,
+  },
+});
