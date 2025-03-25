@@ -1,7 +1,10 @@
 // app/(tab)/_layout.tsx
-import { Tabs } from "expo-router";
-import React from "react";
+import { Tabs, router, useSegments } from "expo-router";
+import React, { useEffect } from "react";
 import { Platform, Animated } from "react-native";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/store";
+import { isAuthenticated } from "@/utils/authUtils";
 import { HapticTab } from "@/components/HapticTab";
 import { IconSymbol } from "@/components/ui/IconSymbol";
 import TabBarBackground from "@/components/ui/TabBarBackground";
@@ -39,6 +42,16 @@ const styles = StyleSheet.create({
 });
 export default function TabLayout() {
   const colorScheme = useColorScheme();
+  const segments = useSegments();
+  const authState = useSelector((state: RootState) => state.auth);
+  
+  useEffect(() => {
+    // Check if the user is authenticated
+    if (!isAuthenticated()) {
+      // Redirect to login screen if not authenticated
+      router.replace('/(onboarding)/login');
+    }
+  }, [authState.isLoggedIn]);
 
   return (
     <Tabs

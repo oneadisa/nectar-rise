@@ -8,13 +8,14 @@ import {
   View,
 } from "react-native";
 
-interface CustomButtonProps {
+export interface CustomButtonProps {
   onPress: () => void;
   title: string;
   variant?: "primary" | "secondary";
   style?: ViewStyle;
   textStyle?: TextStyle;
   icon?: React.ReactNode;
+  disabled?: boolean;
 }
 
 export const CustomButton: React.FC<CustomButtonProps> = ({
@@ -24,15 +25,18 @@ export const CustomButton: React.FC<CustomButtonProps> = ({
   style,
   textStyle,
   icon,
+  disabled = false,
 }) => {
   return (
     <TouchableOpacity
       style={[
         styles.button,
         variant === "primary" ? styles.primaryButton : styles.secondaryButton,
+        disabled && styles.disabledButton,
         style,
       ]}
       onPress={onPress}
+      disabled={disabled}
     >
       <View style={styles.contentContainer}>
         {icon}
@@ -55,6 +59,10 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
+  },
+  disabledButton: {
+    backgroundColor: "#A8D5B7",
+    opacity: 0.7,
   },
   button: {
     padding: 20,

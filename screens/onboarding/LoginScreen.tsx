@@ -10,9 +10,14 @@ import {
   Dimensions,
   TouchableWithoutFeedback,
   Keyboard,
+  ActivityIndicator,
+  Alert,
 } from "react-native";
 
 import { router } from "expo-router";
+import { useDispatch, useSelector } from "react-redux";
+import { loginUser } from "@/store/slices/authSlice";
+import { RootState, AppDispatch } from "@/store/store";
 
 import Carrot from "@/components/figma/Carrot";
 import Svg, { Path } from "react-native-svg";
@@ -68,10 +73,39 @@ export const LoginScreen = ({
 
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleLogin = () => {
-    // Implement login logic here
-    console.log("Login attempted with:", email, password);
-    router.push("/(tab)");
+  const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const dispatch = useDispatch<AppDispatch>();
+  const authState = useSelector((state: RootState) => state.auth);
+
+  const handleLogin = async () => {
+    // Validate input
+    if (!email || !password) {
+      setError("Please enter both email and password");
+      return;
+    }
+
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      const resultAction = await dispatch(
+        loginUser({ username: email, password })
+      );
+
+      if (loginUser.fulfilled.match(resultAction)) {
+        console.log("Login successful");
+        router.push("/(tab)");
+      } else if (loginUser.rejected.match(resultAction)) {
+        setError((resultAction.payload as string) || "Login failed");
+      }
+    } catch (err) {
+      setError("An unexpected error occurred");
+      console.error(err);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleSignUp = () => {
@@ -156,12 +190,23 @@ export const LoginScreen = ({
                 <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
               </TouchableOpacity>
 
+              {/* Error Message */}
+              {error && <Text style={styles.errorText}>{error}</Text>}
+
               {/* Login Button */}
               <CustomButton
-                title="Login"
+                title={isLoading ? "Logging in..." : "Login"}
                 onPress={handleLogin}
                 style={styles.button}
+                disabled={isLoading}
               />
+              {isLoading && (
+                <ActivityIndicator
+                  style={{ marginTop: 10 }}
+                  color="#55B277"
+                  size="small"
+                />
+              )}
 
               {/* Sign Up Link */}
               <View style={styles.signupContainer}>
@@ -182,6 +227,12 @@ export const LoginScreen = ({
 };
 
 const styles = StyleSheet.create({
+  errorText: {
+    color: "red",
+    marginTop: 10,
+    textAlign: "center",
+    fontFamily: FONTS.medium,
+  },
   passwordContainer: {
     flexDirection: "row",
     alignItems: "center",

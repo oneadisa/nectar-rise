@@ -13,12 +13,10 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons, FontAwesome } from "@expo/vector-icons";
 import CartItemComponent from "../../components/cards/CartItem";
-import { COLORS } from "../../constants/Colors";
 import { FONTS } from "../../constants/Fonts";
 import { useCart, CartItem as CartItemType } from "@/context/CartContext";
 import Success from "@/components/figma/Success";
 import Failed from "@/components/figma/Failed";
-import GroceryBag from "@/components/figma/GroceryBag";
 
 // Using CartItem type from CartContext
 

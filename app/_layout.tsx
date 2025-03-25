@@ -15,6 +15,7 @@ import { FONTS } from "@/constants/Fonts";
 import { Layout } from "react-native-reanimated";
 import { FavoritesProvider } from "@/context/FavoritesContext";
 import { CartProvider } from "@/context/CartContext";
+import { ReduxProvider } from "@/store/provider";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -40,9 +41,10 @@ export default function RootLayout() {
   }
 
   return (
-    <CartProvider>
-      <FavoritesProvider>
-        <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+    <ReduxProvider>
+      <CartProvider>
+        <FavoritesProvider>
+          <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
           <Stack
             screenOptions={{
               headerShown: false,
@@ -58,8 +60,9 @@ export default function RootLayout() {
             <Stack.Screen name="+not-found" />
           </Stack>
           <StatusBar style="dark" />
-        </ThemeProvider>
-      </FavoritesProvider>
-    </CartProvider>
+          </ThemeProvider>
+        </FavoritesProvider>
+      </CartProvider>
+    </ReduxProvider>
   );
 }

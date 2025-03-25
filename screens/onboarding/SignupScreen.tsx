@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -10,8 +10,13 @@ import {
   Dimensions,
   TouchableWithoutFeedback,
   Keyboard,
+  ActivityIndicator,
+  Alert,
 } from "react-native";
 import { router } from "expo-router";
+import { useDispatch, useSelector } from "react-redux";
+import { registerUser, resetSignupSuccess } from "@/store/slices/authSlice";
+import { RootState, AppDispatch } from "@/store/store";
 import Carrot from "@/components/figma/Carrot";
 import Svg, { Path } from "react-native-svg";
 import { CustomButton, Background, BackButton } from "../../components";
@@ -63,13 +68,63 @@ export const SignupScreen = ({
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [userName, setUserName] = useState("");
-
+  const [error, setError] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleLogin = () => {
-    // Implement login logic here
-    console.log("Login attempted with:", email, password);
-    router.push("/(tab)");
+  const dispatch = useDispatch<AppDispatch>();
+  const {
+    loading,
+    error: storeError,
+    signupSuccess,
+  } = useSelector((state: RootState) => state.auth);
+
+  useEffect(() => {
+    if (storeError) {
+      setError(storeError);
+    }
+
+    if (signupSuccess) {
+      Alert.alert(
+        "Registration Successful",
+        "Your account has been created successfully. Please login with your credentials.",
+        [
+          {
+            text: "OK",
+            onPress: () => {
+              dispatch(resetSignupSuccess());
+              router.push("/(onboarding)/login");
+            },
+          },
+        ]
+      );
+    }
+  }, [storeError, signupSuccess]);
+
+  const handleSignup = async () => {
+    if (!userName || !email || !password) {
+      setError("Please fill in all fields");
+      return;
+    }
+
+    if (password.length < 6) {
+      setError("Password must be at least 6 characters long");
+      return;
+    }
+
+    if (!email.includes("@")) {
+      setError("Please enter a valid email address");
+      return;
+    }
+
+    setError(null);
+
+    await dispatch(
+      registerUser({
+        username: userName,
+        email: email,
+        password: password,
+      })
+    );
   };
 
   const goToLogin = () => {
@@ -102,8 +157,6 @@ export const SignupScreen = ({
               <Text style={styles.subtitle}>
                 Enter your credentials to continue
               </Text>
-              {/* <View style={styles.innerContainer}> */}
-              {/* Username Input */}
               <View style={styles.inputContainer}>
                 <Text style={styles.label}>Username </Text>
                 <TextInput
@@ -180,12 +233,23 @@ export const SignupScreen = ({
                 </TouchableOpacity>
               </View>
 
-              {/* Login Button */}
+              {/* Error Message */}
+              {error && <Text style={styles.errorText}>{error}</Text>}
+
+              {/* Sign Up Button */}
               <CustomButton
-                title="Sign Up"
-                onPress={handleLogin}
+                title={loading ? "Creating Account..." : "Sign Up"}
+                onPress={handleSignup}
                 style={styles.button}
+                disabled={loading}
               />
+              {loading && (
+                <ActivityIndicator
+                  style={{ marginTop: 10 }}
+                  color="#55B277"
+                  size="small"
+                />
+              )}
 
               {/* Sign Up Link */}
               <View style={styles.signupContainer}>
@@ -204,6 +268,12 @@ export const SignupScreen = ({
 };
 
 const styles = StyleSheet.create({
+  errorText: {
+    color: "red",
+    marginTop: 10,
+    textAlign: "center",
+    fontFamily: FONTS.medium,
+  },
   passwordContainer: {
     flexDirection: "row",
     alignItems: "center",
