@@ -1,4 +1,6 @@
 // Simple test script for FakeStore API user registration
+const { API_BASE_URL, API_ENDPOINTS, getApiUrl } = require('../config/env');
+
 async function testSignup() {
   try {
     console.log('Testing FakeStore API user registration...');
@@ -24,7 +26,7 @@ async function testSignup() {
       phone: '1234567890'
     };
     
-    const response = await fetch('https://fakestoreapi.com/users', {
+    const response = await fetch(getApiUrl(API_ENDPOINTS.REGISTER), {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

@@ -1,5 +1,6 @@
 // components/SectionCarousel.tsx
 import React from "react";
+import { useDispatch } from "react-redux";
 import {
   View,
   Text,
@@ -13,6 +14,8 @@ import { FONTS } from "../../constants/Fonts";
 import { useRouter } from "expo-router";
 import BannerCard from "../cards/BannerCard";
 import { useCart } from "@/context/CartContext";
+import { addItemToCart } from "@/store/slices/cartSlice";
+import { AppDispatch } from "@/store/store";
 
 type SectionCarouselProps = {
   title: string;
@@ -49,7 +52,8 @@ const SectionCarousel: React.FC<SectionCarouselProps> = ({
   section, // Section identifier
 }) => {
   const router = useRouter();
-  const { addToCart } = useCart();
+  const { addToCart: addToCartContext } = useCart();
+  const dispatch = useDispatch<AppDispatch>();
   const handleSeeAllPress = () => {
     if (onSeeAllPress) {
       onSeeAllPress();
@@ -135,8 +139,24 @@ const SectionCarousel: React.FC<SectionCarouselProps> = ({
             quantity={item.quantity}
             onPress={() => handleProductPress(item)}
             onAddToCart={() => {
-              // Add the item to cart using CartContext with section information
-              addToCart({
+              // Add the item to cart using Redux with section information
+              dispatch(addItemToCart({
+                product: {
+                  id: parseInt(item.id),
+                  title: item.name,
+                  price: parseFloat(item.price.replace('$', '')),
+                  image: typeof item.image === 'string' ? item.image : item.imagePath,
+                  quantity: item.quantity,
+                  category: '',
+                  description: '',
+                  rating: { rate: 0, count: 0 }
+                },
+                quantity: 1,
+                section: section || title.toLowerCase().replace(' ', '-')
+              }));
+              
+              // Also add to context for backward compatibility
+              addToCartContext({
                 id: item.id,
                 name: item.name,
                 image: item.image,

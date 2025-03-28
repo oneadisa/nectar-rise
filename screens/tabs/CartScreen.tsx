@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
   View,
   Text,
@@ -14,7 +15,9 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons, FontAwesome } from "@expo/vector-icons";
 import CartItemComponent from "../../components/cards/CartItem";
 import { FONTS } from "../../constants/Fonts";
-import { useCart, CartItem as CartItemType } from "@/context/CartContext";
+import { CartItem as CartItemType } from "@/context/CartContext";
+import { updateQuantity, removeFromCart, selectCartTotal } from "@/store/slices/cartSlice";
+import { RootState, AppDispatch } from "@/store/store";
 import Success from "@/components/figma/Success";
 import Failed from "@/components/figma/Failed";
 
@@ -25,53 +28,78 @@ const CartScreen = () => {
   const [orderSuccessVisible, setOrderSuccessVisible] = useState(false);
   const [orderErrorVisible, setOrderErrorVisible] = useState(false);
 
-  // Use the cart context instead of local state
-  const { cartItems, updateQuantity, removeFromCart, getCartTotal } = useCart();
+  // Use Redux instead of cart context
+  const dispatch = useDispatch<AppDispatch>();
+  const cartItems = useSelector((state: RootState) => state.cart.items);
+  const cartLoading = useSelector((state: RootState) => state.cart.loading);
 
   const handleIncrease = (id: string, section?: string) => {
+    const productId = parseInt(id);
     const item = cartItems.find((item) => {
       if (section) {
-        return item.id === id && item.section === section;
+        return item.productId === productId && item.section === section;
       }
-      return item.id === id;
+      return item.productId === productId;
     });
     if (item) {
-      updateQuantity(id, item.count + 1, item.section);
+      dispatch(updateQuantity({ 
+        productId: productId, 
+        quantity: item.quantity + 1, 
+        section: item.section 
+      }));
     }
   };
 
   const handleDecrease = (id: string, section?: string) => {
+    const productId = parseInt(id);
     const item = cartItems.find((item) => {
       if (section) {
-        return item.id === id && item.section === section;
+        return item.productId === productId && item.section === section;
       }
-      return item.id === id;
+      return item.productId === productId;
     });
-    if (item && item.count > 1) {
-      updateQuantity(id, item.count - 1, item.section);
+    if (item && item.quantity > 1) {
+      dispatch(updateQuantity({ 
+        productId: productId, 
+        quantity: item.quantity - 1, 
+        section: item.section 
+      }));
     }
   };
 
   const handleRemove = (id: string, section?: string) => {
-    removeFromCart(id, section);
+    const productId = parseInt(id);
+    dispatch(removeFromCart({ productId, section }));
   };
 
   const calculateTotal = () => {
-    return getCartTotal().toFixed(2);
+    const total = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    return total.toFixed(2);
   };
 
-  const renderCartItem = (item: CartItemType) => (
+  // Convert Redux cart items to format expected by CartItemComponent
+  const mapCartItemForDisplay = (item: any) => ({
+    id: item.productId.toString(),
+    name: item.title,
+    image: { uri: item.image },
+    price: item.formattedPrice || `$${item.price.toFixed(2)}`,
+    quantity: item.formattedQuantity || '1kg',
+    count: item.quantity,
+    section: item.section
+  });
+
+  const renderCartItem = (item: any) => (
     <CartItemComponent
-      key={`${item.id}-${item.section || "default"}`}
-      image={item.image}
-      name={item.name}
-      quantity={item.quantity}
-      price={item.price}
-      count={item.count}
+      key={`${item.productId}-${item.section || "default"}`}
+      image={{ uri: item.image }}
+      name={item.title}
+      quantity={item.formattedQuantity || '1kg'}
+      price={item.formattedPrice || `$${item.price.toFixed(2)}`}
+      count={item.quantity}
       section={item.section}
-      onIncrease={() => handleIncrease(item.id, item.section)}
-      onDecrease={() => handleDecrease(item.id, item.section)}
-      onRemove={() => handleRemove(item.id, item.section)}
+      onIncrease={() => handleIncrease(item.productId.toString(), item.section)}
+      onDecrease={() => handleDecrease(item.productId.toString(), item.section)}
+      onRemove={() => handleRemove(item.productId.toString(), item.section)}
     />
   );
 

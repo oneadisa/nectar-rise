@@ -108,9 +108,9 @@ export const LoginScreen = ({
     }
   };
 
-  const handleSignUp = () => {
-    router.push("/(onboarding)/signup");
-  };
+  // const handleSignUp = () => {
+  //   router.push("/(onboarding)/signup");
+  // };
 
   const [isFocused, setIsFocused] = useState(false);
 

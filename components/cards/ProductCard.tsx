@@ -67,7 +67,9 @@ const ProductCard: React.FC<ProductCardProps> = ({
       </TouchableOpacity>
       
       <Image source={image} style={styles.image} resizeMode="contain" />
-      <Text style={styles.name}>{name}</Text>
+      <View style={styles.nameContainer}>
+        <Text style={styles.name} numberOfLines={2} ellipsizeMode="tail">{name}</Text>
+      </View>
       <Text
         style={{
           color: "#7C7C7C",
@@ -100,15 +102,15 @@ const styles = StyleSheet.create({
   card: {
     borderRadius: 18,
     paddingVertical: 20,
-    paddingHorizontal: 10,
+    paddingHorizontal: 15,
     marginRight: 10,
     marginVertical: 5,
-    // alignItems: "center",
     width: 175,
     height: 250,
     borderWidth: 1,
     borderColor: "#E2E2E2",
     position: "relative",
+    justifyContent: "space-between",
   },
   favoriteButton: {
     position: "absolute",
@@ -121,15 +123,18 @@ const styles = StyleSheet.create({
     width: 105,
     height: 75,
     resizeMode: "contain",
-    marginBottom: 20,
+    marginBottom: 10,
+  },
+  nameContainer: {
+    height: 40, // Fixed height for name container
+    width: "100%",
   },
   name: {
     fontFamily: FONTS.semi,
     fontSize: FONTS.size.medium,
     color: "#181725",
-    marginTop: 5,
-    marginBottom: 10,
     textAlign: "left",
+    lineHeight: 20,
   },
   price: {
     fontFamily: FONTS.semi,

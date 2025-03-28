@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
+import { getApiUrl, API_ENDPOINTS } from "@/config/env";
 
 interface AuthState {
   token: string | null;
@@ -45,7 +46,7 @@ export const registerUser = createAsyncThunk<
       password: userData.password,
     };
 
-    const response = await fetch("https://fakestoreapi.com/users", {
+    const response = await fetch(getApiUrl(API_ENDPOINTS.REGISTER), {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -72,7 +73,6 @@ export const registerUser = createAsyncThunk<
   }
 });
 
-// Async thunk for login
 export const loginUser = createAsyncThunk(
   "auth/login",
   async (
@@ -80,7 +80,7 @@ export const loginUser = createAsyncThunk(
     { rejectWithValue }
   ) => {
     try {
-      const response = await fetch("https://fakestoreapi.com/auth/login", {
+      const response = await fetch(getApiUrl(API_ENDPOINTS.LOGIN), {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -134,7 +134,7 @@ const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // Login cases
+
       .addCase(loginUser.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -150,7 +150,6 @@ const authSlice = createSlice({
         state.error = (action.payload as string) || "Login failed";
       })
 
-      // Registration cases
       .addCase(registerUser.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -160,8 +159,6 @@ const authSlice = createSlice({
         state.loading = false;
         state.signupSuccess = true;
         state.error = null;
-        // We don't log the user in automatically after registration
-        // They need to login with their credentials
       })
       .addCase(registerUser.rejected, (state, action) => {
         state.loading = false;
@@ -173,3 +170,15 @@ const authSlice = createSlice({
 
 export const { logout, setCredentials, resetSignupSuccess } = authSlice.actions;
 export default authSlice.reducer;
+
+// products slice, cart slice
+// redux persist
+// loading state (X)
+// add to cart (shoudld work)
+// Oh ok sure
+
+// - Cart and Product Slice
+// - Removal of Cart and Product
+// - ⁠Providers implementations
+// - API folder and env. variables for endpoints
+// - Redux persist

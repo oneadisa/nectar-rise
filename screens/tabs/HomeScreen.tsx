@@ -1,5 +1,6 @@
 // app/(tab)/index.tsx
 import React, { useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
   View,
   Text,
@@ -31,6 +32,8 @@ import {
   bannerProduct,
 } from "@/types/contentArrays/homeScreenProducts";
 import { bannerSlides } from "@/types/contentArrays/bannerSlides";
+import { fetchProducts } from "@/store/slices/productSlice";
+import { RootState, AppDispatch } from "@/store/store";
 import SectionCarousel from "@/components/ui/SectionCarousel";
 import BannerSlider from "@/components/ui/BannerSlider";
 import { RootStackParamList } from "@/types/navigation";
@@ -40,6 +43,13 @@ type HomeScreenNavigationProp = NavigationProp<RootStackParamList>;
 
 const HomeScreen = () => {
   const navigation = useNavigation<HomeScreenNavigationProp>();
+  const dispatch = useDispatch<AppDispatch>();
+  const { exclusiveOffers, loading } = useSelector((state: RootState) => state.products);
+  
+  useEffect(() => {
+    // Fetch products when component mounts
+    dispatch(fetchProducts());
+  }, [dispatch]);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -82,7 +92,15 @@ const HomeScreen = () => {
 
         <SectionCarousel
           title="Exclusive Offer"
-          data={products1}
+          data={loading ? products1 : exclusiveOffers.map(product => ({
+            id: product.id.toString(),
+            // Truncate long titles for better display
+            name: product.title.length > 25 ? product.title.substring(0, 25) : product.title,
+            price: product.formattedPrice || `$${product.price.toFixed(2)}`,
+            quantity: product.quantity || '1kg',
+            image: { uri: product.image },
+            imagePath: product.image
+          }))}
           section="exclusive"
           // navigation = {navigation}
         />
